@@ -19,14 +19,12 @@ def main():
     parser.add_argument('--plots', help='Flag: if selected, will show the plots instead of only saving them', required=False, action='store_true')
     parser.add_argument('-n', '--nsamples', help='Number of MC samples you want to generate', required=False, default=10000, type=int)
     parser.add_argument('-b', '--burnin', help='Burn in: number of first samples that are not considered for the chain', required=False, default=100, type=int)
-    parser.add_argument('--a_range', help='Range of alpha', required=False, default=[-5,5], nargs='+', type=float)
-    parser.add_argument('--b_range', help='Range of beta', required=False, default=[0,5], nargs='+', type=float)
-    parser.add_argument('-s', '--starting', help='Starting values for the chain', default=[0.2, 0.2], nargs='+', required=False, type=float)
+    parser.add_argument('--a_range', help='Range of alpha', required=False, default=[-2,2], nargs='+', type=float)
+    parser.add_argument('--b_range', help='Range of beta', required=False, default=[0.1,4], nargs='+', type=float)
+    parser.add_argument('-s', '--starting', help='Starting values for the chain', default=[0.3, 0.3, 0.3], nargs='+', required=False, type=float)
     parser.add_argument('-i', '--intensity', help='Mean of log-I distribution for I0', required=False, default=1.1, type=float)
     parser.add_argument('-c', '--custom_name', help='Custom name to save different plots', required=False, type=str)
-    
-    # parser.add_argument('-c', '--cov', help='Covariance', required=False, default=[[1.5,0.],[0.,1.5]],)
-    
+      
     if not os.path.exists('Plots'):
         os.makedirs('Plots')
     
