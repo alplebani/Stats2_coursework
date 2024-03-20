@@ -1,18 +1,11 @@
-name: CDT_ML
+name: CDT_Stat
 channels:
   - defaults
   - conda-forge
-  - pytorch
 dependencies:
   - python=3.9
   - matplotlib
   - numpy
-  - tqdm
-  - pytorch
-  - accelerate
-  - torchvision
-  - ignite
   - scikit-learn
-  - scikit-image
 
 

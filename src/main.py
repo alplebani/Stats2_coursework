@@ -22,7 +22,8 @@ def main():
     parser.add_argument('--a_range', help='Range of alpha', required=False, default=[-5,5], nargs='+', type=float)
     parser.add_argument('--b_range', help='Range of beta', required=False, default=[0,5], nargs='+', type=float)
     parser.add_argument('-s', '--starting', help='Starting values for the chain', default=[0.2, 0.2], nargs='+', required=False, type=float)
-    parser.add_argument('-i', '--intensity', help='Mean of log-I distribution for I0', required=False, default=1., type=float)
+    parser.add_argument('-i', '--intensity', help='Mean of log-I distribution for I0', required=False, default=1.1, type=float)
+    parser.add_argument('-c', '--custom_name', help='Custom name to save different plots', required=False, type=str)
     
     # parser.add_argument('-c', '--cov', help='Covariance', required=False, default=[[1.5,0.],[0.,1.5]],)
     
@@ -41,6 +42,15 @@ def main():
     
     # check that alpha, beta are in increasing order
     # for i in [range_alpha, range_beta]:
+    
+    ranges = [range_alpha, range_beta]
+    
+    for i in ranges:
+        if i[1] < i[0]:
+            raise ValueError('Error! Alpha and Beta ranges must be in increasing order')
+        
+    if range_beta[0] < 0:
+        raise ValueError('Error! Beta must be positive')
     
     data = np.loadtxt("lighthouse_flash_data.txt")
     
@@ -71,13 +81,18 @@ def main():
     # Joint histogram
     plot_histo_2d(alphas, betas, 'alpha', 'beta', 'position')    
 
+    if args.custom_name:
+        custom_name = f'position_{args.custom_name}'
+    else:
+        custom_name = 'position'
+
     # Marginal histograms
-    plot_marginal(alphas, 'alpha', custom_name='position')
-    plot_marginal(betas, 'beta', custom_name='position')
+    plot_marginal(alphas, 'alpha', custom_name=custom_name)
+    plot_marginal(betas, 'beta', custom_name=custom_name)
 
     means = [alpha_mean, beta_mean]
 
-    plot_trace(MC_chain, means, ['alpha', 'beta'], size=2, colors=['r', 'blue'], custom_name='position', latexs=[r'$\langle \alpha \rangle$', r'$\langle \beta \rangle$'])
+    plot_trace(MC_chain, means, ['alpha', 'beta'], size=2, colors=['r', 'blue'], custom_name=custom_name, latexs=[r'$\langle \alpha \rangle$', r'$\langle \beta \rangle$'])
     
     print("=======================================")
     print('Executing part VII)')
@@ -104,21 +119,26 @@ def main():
     int_mean = np.mean(intensities)
     int_std = np.std(intensities)
     
+    if args.custom_name:
+        custom_name = f'part7_{args.custom_name}'
+    else:
+        custom_name = 'part7'
+    
     print(f'Alpha = {alpha_int_mean:.4g} +- {alpha_int_std:.4g}')
     print(f'Beta = {beta_int_mean:.4g} +- {beta_int_std:.4g}')
     print(f'I0 = {int_mean:.4g} +- {int_std:.4g}')
         
-    plot_histo_2d(alphas_int, betas_int, 'alpha', 'beta', 'part7')   
-    plot_histo_2d(alphas_int, intensities, 'alpha', 'I0', 'part7')
-    plot_histo_2d(betas_int, intensities, 'beta', 'I0', 'part7')
+    plot_histo_2d(alphas_int, betas_int, 'alpha', 'beta', custom_name=custom_name)   
+    plot_histo_2d(alphas_int, intensities, 'alpha', 'I0', custom_name=custom_name)
+    plot_histo_2d(betas_int, intensities, 'beta', 'I0', custom_name=custom_name)
     
-    plot_marginal(alphas_int, 'alpha', 'part7')
-    plot_marginal(betas_int, 'beta', 'part7')
-    plot_marginal(intensities, 'I0', 'part7') 
+    plot_marginal(alphas_int, 'alpha', custom_name=custom_name)
+    plot_marginal(betas_int, 'beta', custom_name=custom_name)
+    plot_marginal(intensities, 'I0', custom_name=custom_name) 
     
     means = [alpha_int_mean, beta_int_mean, int_mean]
     
-    plot_trace(MC_chain_2, means, ['alpha', 'beta', 'I0'], size=3, colors=['r', 'blue', 'black'], custom_name='part7', latexs=[r'$\langle \alpha \rangle$', r'$\langle \beta \rangle$', r'$\langle I0 \rangle$'])
+    plot_trace(MC_chain_2, means, ['alpha', 'beta', 'I0'], size=3, colors=['r', 'blue', 'black'], custom_name=custom_name, latexs=[r'$\langle \alpha \rangle$', r'$\langle \beta \rangle$', r'$\langle I0 \rangle$'])
     
         
     if args.plots: # display plots only if the --plots is used
