@@ -1,0 +1,37 @@
+README containing instructions on how to run the code for the coursework.
+
+The repository can be cloned with 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{git clone git@gitlab.developers.cam.ac.uk:phy/data-\/intensive-\/science-\/mphil/s2\_assessment/ap2387.git}
+
+\end{DoxyCode}
+\hypertarget{md_README_autotoc_md1}{}\doxysection{Anaconda}\label{md_README_autotoc_md1}
+The conda environment can be created using the \href{https://gitlab.developers.cam.ac.uk/phy/data-intensive-science-mphil/S2_Assessment/ap2387/-/blob/main/environment.yml?ref_type=heads}{\texttt{ environment.\+yml}} file, which contains all the packages needed to run the code\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{conda env create -\/-\/name CDT\_ML -\/-\/file environment.yml}
+
+\end{DoxyCode}
+\hypertarget{md_README_autotoc_md2}{}\doxysection{Report}\label{md_README_autotoc_md2}
+The final report is presented in \href{https://gitlab.developers.cam.ac.uk/phy/data-intensive-science-mphil/S2_Assessment/ap2387/-/blob/main/report/ap2387.pdf?ref_type=heads}{\texttt{ ap2387.\+pdf}}. The file is generated using La\+TeX, but all La\+Te\+X-\/related files are not being committed as per the instructions on the \href{https://gitlab.developers.cam.ac.uk/phy/data-intensive-science-mphil/S2_Assessment/ap2387/-/blob/main/.gitignore?ref_type=heads}{\texttt{ .gitignore}} file.\hypertarget{md_README_autotoc_md3}{}\doxysection{Code structure}\label{md_README_autotoc_md3}
+The codes to run the exercises can be found in the {\ttfamily src} folder, whereas the file \href{https://gitlab.developers.cam.ac.uk/phy/data-intensive-science-mphil/S2_Assessment/ap2387/-/blob/main/Helpers/HelperFunctions.py?ref_type=heads}{\texttt{ Helpers/\+Helper\+Functions.\+py}} contains the definition of the classes used in the code.
+
+The code can be run with multiple {\ttfamily parser} options, which can be accessed with the following command 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{python src/main.py -\/h}
+
+\end{DoxyCode}
+
+
+The parser options are the following\+:
+\begin{DoxyItemize}
+\item {\ttfamily -\/-\/plots}\+: If selected, this flag displays the plots instead of only saving them
+\item {\ttfamily -\/n, -\/-\/nsamples}\+: Number (int) of samples to be generated in the Markov Chain. By default this number is set to 10000, because running for 500000 takes roughly 5 minutes
+\item {\ttfamily -\/b, -\/-\/burnin}\+: Number (int) of samples to be considered for the burn-\/in. By default this number is set to 1000.
+\item {\ttfamily -\/-\/a\+\_\+range}\+: List of 2 space-\/separated values (float) for the range of alpha, which defines in which range the prior distribution for alpha is uniform. The two parameters must be in increasing order. By default, these values are set to -\/2 and 2
+\item {\ttfamily b\+\_\+range}\+: \+: List of 2 space-\/separated values (float) for the range of beta, which defines in which range the prior distribution for alpha is uniform. The two parameters must be in increasing order, with the first one which needs to be positive. By default, these values are set to 0.\+1 and 4.
+\item {\ttfamily -\/s, -\/-\/starting}\+: List of 3 space-\/separated values (float) which are the starting points for alpha, beta and I0 in the chain. By default, all three values are set to 0.\+3
+\item {\ttfamily -\/i, -\/-\/intensity}\+: Mean (float) of the log-\/I distribution for I0. By default, this parameter is set to 1.\+1
+\item {\ttfamily -\/c, -\/-\/custom\+\_\+name}\+: Custom name to give to the plots when saving them, to be used to run different tests and change configurations
+\end{DoxyItemize}
+
+The plots will be saved in the {\ttfamily Plots} folder. 
